@@ -22,17 +22,18 @@ public class thu_ThuocDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                thu_Thuoc thuoc = new thu_Thuoc();
-                thuoc.setId(rs.getInt("id"));
-                thuoc.setTenThuoc(rs.getString("tenThuoc"));
-                thuoc.setLoaiThuoc(rs.getString("loaiThuoc"));
-                thuoc.setGiaBan(rs.getDouble("giaBan"));
-                thuoc.setSoLuong(rs.getInt("soLuong"));
-                thuoc.setNhaCungCap(rs.getString("nhaCungCap"));
+                thu_Thuoc thuoc = new thu_Thuoc(
+                    rs.getInt("id"),
+                    rs.getString("tenThuoc"),
+                    rs.getString("loaiThuoc"),
+                    rs.getDouble("giaBan"),
+                    rs.getInt("soLuong"),
+                    rs.getString("nhaCungCap")
+                );
                 danhSachThuoc.add(thuoc);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // In lỗi chi tiết
+            e.printStackTrace();
         }
         return danhSachThuoc;
     }
@@ -46,8 +47,8 @@ public class thu_ThuocDAO {
             stmt.setDouble(3, thuoc.getGiaBan());
             stmt.setInt(4, thuoc.getSoLuong());
             stmt.setString(5, thuoc.getNhaCungCap());
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,6 +65,7 @@ public class thu_ThuocDAO {
             stmt.setInt(4, thuoc.getSoLuong());
             stmt.setString(5, thuoc.getNhaCungCap());
             stmt.setInt(6, thuoc.getId());
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
